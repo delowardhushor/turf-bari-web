@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "home": "Home",
+    "findTurfs": "Find Turfs",
+    "myBookings": "My Bookings",
+    "contactUs": "Contact Us",
+    "signIn": "Sign In",
+    "bookNow": "Book Now"
+  },
+  "hero": {
+    "badge": "Easy Turf Booking in Bangladesh",
+    "heading1": "Book Your Perfect Game in",
+    "heading2": "Seconds",
+    "subheading": "Discover high-quality football fields and cricket pitches near you. Choose your slot, book online, and get ready to play.",
+    "sport": "Sport",
+    "location": "Location",
+    "date": "Date",
+    "search": "Search",
+    "football": "Football",
+    "cricket": "Cricket",
+    "futsal": "Futsal"
+  },
+  "features": {
+    "heading": "Why Book Through TurfBari?",
+    "subheading": "We provide the smoothest sports booking experience with premium facilities.",
+    "instant": {
+      "title": "Instant Confirmation",
+      "desc": "No more phone calls. Select your desired time slot and receive immediate confirmation."
+    },
+    "verified": {
+      "title": "Verified Locations",
+      "desc": "We verify turf dimensions, pitch quality, and onsite amenities so you get exactly what you see."
+    },
+    "secure": {
+      "title": "Secure Payments",
+      "desc": "Pay safely via bKash, Nagad, cards, or other gateways with flexible refund options."
+    },
+    "rewards": {
+      "title": "Reward Points",
+      "desc": "Earn booking loyalty points and redeem them for free matches and discounts on tournaments."
+    }
+  },
+  "turfs": {
+    "heading": "Featured Venues",
+    "subheading": "Top-rated arenas with active bookings right now.",
+    "viewAll": "View All",
+    "reviews": "reviews",
+    "priceLabel": "Price Starts At",
+    "perHour": "/ Hour",
+    "bookSlot": "Book Slot"
+  },
+  "cta": {
+    "heading": "Ready to dominate the pitch?",
+    "subheading": "Secure your slot, invite your friends, and make every match count.",
+    "findTurf": "Find a Turf Near You",
+    "registerOwner": "Register as Turf Owner"
+  },
+  "footer": {
+    "tagline": "Book the finest football and cricket turfs around you. Hassle-free reservations, instant confirmations, and premium facilities.",
+    "explore": "Explore",
+    "browseTurfs": "Browse Turfs",
+    "myReservations": "My Reservations",
+    "aboutUs": "About Us",
+    "faqs": "FAQs",
+    "contactUs": "Contact Us",
+    "address": "Sector 11, Uttara, Dhaka, Bangladesh",
+    "stayUpdated": "Stay Updated",
+    "newsletterDesc": "Subscribe to get notified about offers, tournaments, and discounts.",
+    "emailPlaceholder": "Enter your email",
+    "join": "Join",
+    "allRights": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "refund": "Refund Policy"
+  }
+}

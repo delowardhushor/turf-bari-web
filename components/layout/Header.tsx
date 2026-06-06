@@ -6,34 +6,29 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Calendar, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const NAV_ITEMS = [
-  { label: "Home", href: "/" },
-  { label: "Find Turfs", href: "/turfs" },
-  { label: "My Bookings", href: "/bookings" },
-  { label: "Contact Us", href: "/contact" },
-];
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const { t } = useLanguage();
 
-  // Handle scroll detection for dynamic styling
+  const NAV_ITEMS = [
+    { label: t("nav.home"), href: "/" },
+    { label: t("nav.findTurfs"), href: "/turfs" },
+    { label: t("nav.myBookings"), href: "/bookings" },
+    { label: t("nav.contactUs"), href: "/contact" },
+  ];
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on navigation
   useEffect(() => {
     setIsOpen(false);
   }, [pathname]);
@@ -48,10 +43,11 @@ export default function Header() {
       )}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+        <Link href="/" className="flex items-center gap-2 group shrink-0">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500 text-white shadow-md shadow-emerald-500/20 transition-all duration-300 group-hover:scale-105 group-hover:bg-emerald-600">
-            <Flame className="h-5 w-5 fill-current animate-pulse" />
+            <Flame className="h-5 w-5 fill-current" />
           </div>
           <span className="text-xl font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             Turf<span className="text-emerald-500">Bari</span>
@@ -81,25 +77,30 @@ export default function Header() {
           })}
         </nav>
 
-        {/* Action Buttons */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Desktop Actions */}
+        <div className="hidden md:flex items-center gap-2">
+          <LanguageSwitcher />
+          <ThemeToggle />
+          <div className="ml-2 h-5 w-px bg-zinc-200 dark:bg-zinc-700" />
           <Link
             href="/login"
-            className="text-sm font-medium text-zinc-700 transition-colors hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
+            className="px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
           >
-            Sign In
+            {t("nav.signIn")}
           </Link>
           <Link
             href="/turfs"
-            className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-emerald-500/25 transition-all duration-200 hover:bg-emerald-600 hover:shadow-emerald-600/30 hover:scale-[1.02] active:scale-98"
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-emerald-500/25 transition-all duration-200 hover:bg-emerald-600 hover:scale-[1.02] active:scale-[0.98]"
           >
             <Calendar className="h-4 w-4" />
-            Book Now
+            {t("nav.bookNow")}
           </Link>
         </div>
 
-        {/* Mobile Menu Button */}
-        <div className="flex md:hidden">
+        {/* Mobile: controls + hamburger */}
+        <div className="flex md:hidden items-center gap-2">
+          <LanguageSwitcher />
+          <ThemeToggle />
           <button
             onClick={() => setIsOpen(!isOpen)}
             type="button"
@@ -108,7 +109,7 @@ export default function Header() {
             aria-expanded={isOpen}
           >
             <span className="sr-only">Open main menu</span>
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
@@ -147,14 +148,14 @@ export default function Header() {
                   href="/login"
                   className="block text-center rounded-xl py-3 text-base font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900/50"
                 >
-                  Sign In
+                  {t("nav.signIn")}
                 </Link>
                 <Link
                   href="/turfs"
                   className="flex items-center justify-center gap-2 rounded-xl bg-emerald-500 py-3 text-base font-semibold text-white shadow-md shadow-emerald-500/20 transition-all hover:bg-emerald-600"
                 >
                   <Calendar className="h-5 w-5" />
-                  Book Now
+                  {t("nav.bookNow")}
                 </Link>
               </div>
             </div>
