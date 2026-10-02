@@ -10,7 +10,8 @@ import Button, { buttonStyles } from "@/components/ui/Button";
 import { Alert, EmptyState, Skeleton } from "@/components/ui/Feedback";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAsync } from "@/hooks/useAsync";
-import { useSportLabel } from "@/hooks/useSports";
+import { useSportIcon, useSportLabel } from "@/hooks/useSports";
+import { SportIcon } from "@/components/ui/SportIcon";
 import { ApiError } from "@/services/api";
 import { groundService } from "@/services/grounds";
 import { companyOf, formatDate, formatRange, isDateStr, todayStr } from "@/utils/format";
@@ -113,6 +114,7 @@ function GroundContent({
 }) {
   const { t, locale } = useLanguage();
   const sportLabel = useSportLabel();
+  const sportIcon = useSportIcon();
   const company = companyOf(ground);
   const today = todayStr();
 
@@ -137,7 +139,7 @@ function GroundContent({
               key={s}
               className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300"
             >
-              <Trophy className="h-3 w-3" aria-hidden />
+              {sportIcon(s) ? <SportIcon icon={sportIcon(s)} className="text-sm" /> : <Trophy className="h-3 w-3" aria-hidden />}
               {sportLabel(s)}
             </span>
           ))}

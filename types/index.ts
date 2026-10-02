@@ -58,6 +58,17 @@ export type Ground = {
   status: "active" | "inactive";
 };
 
+export type Sport = {
+  _id: string;
+  /** Stable slug that grounds and bookings refer to, e.g. "table-tennis". */
+  key: string;
+  name: { en: string; bn?: string };
+  /** An emoji or an image URL. */
+  icon?: string;
+  order: number;
+  isActive: boolean;
+};
+
 export type Slot = {
   _id: string;
   groundId: string;

@@ -7,6 +7,7 @@ import TurfCard, { TurfCardSkeleton } from "./TurfCard";
 import Container, { PageHeading } from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
 import { Input, Select } from "@/components/ui/Field";
+import { iconText } from "@/components/ui/SportIcon";
 import { Alert, EmptyState } from "@/components/ui/Feedback";
 import { HOUR_OPTIONS } from "@/constants/time";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -113,8 +114,8 @@ export default function TurfSearch() {
           <Select label={t("search.sport")} value={sport} onChange={(e) => update({ sport: e.target.value })}>
             <option value="">{t("search.anySport")}</option>
             {sports.map((s) => (
-              <option key={s} value={s}>
-                {sportLabel(s)}
+              <option key={s.key} value={s.key}>
+                {[iconText(s.icon), sportLabel(s.key)].filter(Boolean).join(" ")}
               </option>
             ))}
           </Select>

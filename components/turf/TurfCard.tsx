@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ArrowRight, Clock, MapPin, Trophy } from "lucide-react";
 import { buttonStyles } from "@/components/ui/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { useSportLabel } from "@/hooks/useSports";
+import { useSportIcon, useSportLabel } from "@/hooks/useSports";
+import { SportIcon } from "@/components/ui/SportIcon";
 import { companyOf, formatMoney, formatTime, startingPrice } from "@/utils/format";
 import type { Ground, Slot } from "@/types";
 
@@ -31,6 +32,7 @@ type Props = {
 export default function TurfCard({ ground, slots, date, sport }: Props) {
   const { t } = useLanguage();
   const sportLabel = useSportLabel();
+  const sportIcon = useSportIcon();
   const company = companyOf(ground);
   const sorted = slots ? [...slots].sort((a, b) => a.startTime.localeCompare(b.startTime)) : [];
   const price = slots ? Math.min(...slots.map((s) => s.price)) : startingPrice(ground);
@@ -43,7 +45,8 @@ export default function TurfCard({ ground, slots, date, sport }: Props) {
         <Trophy className="absolute right-4 top-4 h-10 w-10 text-white/20" aria-hidden />
         <div className="flex flex-wrap gap-1.5">
           {ground.sports.map((s) => (
-            <span key={s} className="rounded-lg bg-white/95 px-2.5 py-1 text-xs font-bold text-zinc-900 shadow-sm">
+            <span key={s} className="inline-flex items-center gap-1.5 rounded-lg bg-white/95 px-2.5 py-1 text-xs font-bold text-zinc-900 shadow-sm">
+              <SportIcon icon={sportIcon(s)} className="text-sm" />
               {sportLabel(s)}
             </span>
           ))}

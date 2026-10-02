@@ -9,6 +9,7 @@ import TurfCard, { TurfCardSkeleton } from "@/components/turf/TurfCard";
 import { HOUR_OPTIONS } from "@/constants/time";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useActiveGrounds, useSportLabel, useSports } from "@/hooks/useSports";
+import { iconText } from "@/components/ui/SportIcon";
 import { formatTime, todayStr } from "@/utils/format";
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
@@ -70,7 +71,7 @@ export default function Home() {
                   <select value={sport} onChange={(e) => setSport(e.target.value)} className="mt-1 bg-transparent text-sm font-semibold text-zinc-800 focus:outline-none dark:bg-zinc-900 dark:text-zinc-100">
                     <option value="">{t("search.anySport")}</option>
                     {sports.map((s) => (
-                      <option key={s} value={s}>{sportLabel(s)}</option>
+                      <option key={s.key} value={s.key}>{[iconText(s.icon), sportLabel(s.key)].filter(Boolean).join(" ")}</option>
                     ))}
                   </select>
                 </div>

@@ -22,15 +22,6 @@
     "account": "আমার অ্যাকাউন্ট",
     "signOut": "সাইন আউট"
   },
-  "sports": {
-    "football": "ফুটবল",
-    "cricket": "ক্রিকেট",
-    "futsal": "ফুটসাল",
-    "volleyball": "ভলিবল",
-    "basketball": "বাস্কেটবল",
-    "badminton": "ব্যাডমিন্টন",
-    "tennis": "টেনিস"
-  },
   "days": {
     "sun": "রবি",
     "mon": "সোম",

@@ -4,8 +4,5 @@ export const CONSOLE_URL = process.env.NEXT_PUBLIC_CONSOLE_URL ?? "http://localh
 export const TOKEN_KEY = "turfbari_token";
 export const USER_KEY = "turfbari_user";
 
-/** Offered in the sport filter until the API tells us which sports exist. */
-export const DEFAULT_SPORTS = ["football", "cricket", "futsal"];
-
 /** How far ahead the date strip on a turf page reaches. */
 export const BOOKING_HORIZON_DAYS = 60;

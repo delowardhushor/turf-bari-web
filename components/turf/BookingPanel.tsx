@@ -12,7 +12,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAsync } from "@/hooks/useAsync";
 import { useNow } from "@/hooks/useNow";
-import { useSportLabel } from "@/hooks/useSports";
+import { useSportIcon, useSportLabel } from "@/hooks/useSports";
+import { SportIcon } from "@/components/ui/SportIcon";
 import { cn } from "@/lib/utils";
 import { ApiError } from "@/services/api";
 import { bookingService } from "@/services/bookings";
@@ -51,6 +52,7 @@ const partOf = (startTime: string): Part => {
 export default function BookingPanel({ ground, selection, onSelect }: Props) {
   const { t, locale } = useLanguage();
   const sportLabel = useSportLabel();
+  const sportIcon = useSportIcon();
   const { user, ready } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
@@ -172,12 +174,13 @@ export default function BookingPanel({ ground, selection, onSelect }: Props) {
                 aria-checked={sport === s}
                 onClick={() => onSelect({ sport: s })}
                 className={cn(
-                  "rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors",
+                  "inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors",
                   sport === s
                     ? "border-emerald-500 bg-emerald-500 text-white"
                     : "border-zinc-200 text-zinc-700 hover:border-emerald-300 dark:border-zinc-700 dark:text-zinc-300"
                 )}
               >
+                <SportIcon icon={sportIcon(s)} className="text-base" />
                 {sportLabel(s)}
               </button>
             ))}
