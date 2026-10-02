@@ -35,3 +35,15 @@ body {
   font-family: "Hind Siliguri", sans-serif;
 }
 
+
+/* Dropdown and calendar panels fade and rise in */
+@keyframes popover-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

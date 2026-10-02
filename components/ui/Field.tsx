@@ -1,20 +1,12 @@
 "use client";
 
-import { useId, useState, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from "react";
+import { useId, useState, type InputHTMLAttributes, type ReactNode } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
-
-export const controlClass =
-  "w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-zinc-900 shadow-sm transition-all " +
-  "placeholder:text-zinc-400 focus:outline-none focus:ring-1 " +
-  "dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 " +
-  "disabled:cursor-not-allowed disabled:opacity-60";
-
-const stateClass = (error?: string) =>
-  error
-    ? "border-red-400 focus:border-red-500 focus:ring-red-500 dark:border-red-500/70"
-    : "border-zinc-300 focus:border-emerald-500 focus:ring-emerald-500 dark:border-zinc-800 dark:focus:border-emerald-500";
+import DatePicker from "./DatePicker";
+import Dropdown, { type DropdownOption } from "./Dropdown";
+import { controlClass, stateClass } from "./fieldStyles";
 
 type FieldShellProps = {
   id: string;
@@ -81,25 +73,45 @@ export function Input({ label, error, hint, className, type, ...rest }: InputPro
   );
 }
 
-type SelectProps = Omit<SelectHTMLAttributes<HTMLSelectElement>, "id"> & {
+type SelectProps = {
   label: string;
+  value: string;
+  onChange: (value: string) => void;
+  options: DropdownOption[];
+  placeholder?: string;
   error?: string;
   hint?: string;
+  disabled?: boolean;
+  className?: string;
 };
 
-export function Select({ label, error, hint, className, children, ...rest }: SelectProps) {
+export function Select({ label, error, hint, className, ...rest }: SelectProps) {
   const id = useId();
   return (
     <FieldShell id={id} label={label} error={error} hint={hint} className={className}>
-      <select
-        id={id}
-        aria-invalid={!!error}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className={cn(controlClass, stateClass(error))}
-        {...rest}
-      >
-        {children}
-      </select>
+      <Dropdown id={id} error={error} aria-describedby={error ? `${id}-error` : undefined} {...rest} />
+    </FieldShell>
+  );
+}
+
+type DateFieldProps = {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  min?: string;
+  max?: string;
+  placeholder?: string;
+  error?: string;
+  hint?: string;
+  disabled?: boolean;
+  className?: string;
+};
+
+export function DateField({ label, error, hint, className, ...rest }: DateFieldProps) {
+  const id = useId();
+  return (
+    <FieldShell id={id} label={label} error={error} hint={hint} className={className}>
+      <DatePicker id={id} error={error} aria-describedby={error ? `${id}-error` : undefined} {...rest} />
     </FieldShell>
   );
 }

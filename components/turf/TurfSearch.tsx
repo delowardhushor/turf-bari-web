@@ -6,8 +6,8 @@ import { SearchX } from "lucide-react";
 import TurfCard, { TurfCardSkeleton } from "./TurfCard";
 import Container, { PageHeading } from "@/components/ui/Container";
 import Button from "@/components/ui/Button";
-import { Input, Select } from "@/components/ui/Field";
-import { iconText } from "@/components/ui/SportIcon";
+import { DateField, Select } from "@/components/ui/Field";
+import { SportIcon } from "@/components/ui/SportIcon";
 import { Alert, EmptyState } from "@/components/ui/Feedback";
 import { HOUR_OPTIONS } from "@/constants/time";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -65,6 +65,23 @@ export default function TurfSearch() {
     [data, date, now]
   );
 
+  const sportOptions = [
+    { value: "", label: t("search.anySport") },
+    ...sports.map((s) => ({
+      value: s.key,
+      label: sportLabel(s.key),
+      icon: <SportIcon icon={s.icon} className="text-base" />,
+    })),
+  ];
+  const fromOptions = [
+    { value: "", label: t("search.anyTime") },
+    ...HOUR_OPTIONS.map((h) => ({ value: h, label: formatTime(h) })),
+  ];
+  const toOptions = [
+    { value: "", label: t("search.anyTime") },
+    ...[...HOUR_OPTIONS.slice(1), "23:59"].map((h) => ({ value: h, label: formatTime(h) })),
+  ];
+
   const update = (patch: Partial<Filters>) => {
     const next = { ...filters, ...patch };
     const q = new URLSearchParams();
@@ -82,12 +99,11 @@ export default function TurfSearch() {
       >
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Input
+            <DateField
               label={t("search.date")}
-              type="date"
               min={today}
               value={date}
-              onChange={(e) => e.target.value && update({ date: e.target.value })}
+              onChange={(v) => v && update({ date: v })}
             />
             <div className="mt-2 flex gap-2">
               {[
@@ -111,33 +127,9 @@ export default function TurfSearch() {
             </div>
           </div>
 
-          <Select label={t("search.sport")} value={sport} onChange={(e) => update({ sport: e.target.value })}>
-            <option value="">{t("search.anySport")}</option>
-            {sports.map((s) => (
-              <option key={s.key} value={s.key}>
-                {[iconText(s.icon), sportLabel(s.key)].filter(Boolean).join(" ")}
-              </option>
-            ))}
-          </Select>
-
-          <Select label={t("search.from")} value={from} onChange={(e) => update({ from: e.target.value })}>
-            <option value="">{t("search.anyTime")}</option>
-            {HOUR_OPTIONS.map((h) => (
-              <option key={h} value={h}>
-                {formatTime(h)}
-              </option>
-            ))}
-          </Select>
-
-          <Select label={t("search.to")} value={to} onChange={(e) => update({ to: e.target.value })}>
-            <option value="">{t("search.anyTime")}</option>
-            {HOUR_OPTIONS.slice(1).map((h) => (
-              <option key={h} value={h}>
-                {formatTime(h)}
-              </option>
-            ))}
-            <option value="23:59">{formatTime("23:59")}</option>
-          </Select>
+          <Select label={t("search.sport")} value={sport} onChange={(v) => update({ sport: v })} options={sportOptions} />
+          <Select label={t("search.from")} value={from} onChange={(v) => update({ from: v })} options={fromOptions} />
+          <Select label={t("search.to")} value={to} onChange={(v) => update({ to: v })} options={toOptions} />
         </div>
       </section>
 

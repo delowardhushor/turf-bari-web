@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { CalendarX } from "lucide-react";
 import Button from "@/components/ui/Button";
-import { Input } from "@/components/ui/Field";
+import { DateField } from "@/components/ui/Field";
 import { Alert, Skeleton } from "@/components/ui/Feedback";
 import { BOOKING_HORIZON_DAYS } from "@/constants";
 import { useAuth } from "@/contexts/AuthContext";
@@ -150,13 +150,12 @@ export default function BookingPanel({ ground, selection, onSelect }: Props) {
             );
           })}
         </div>
-        <Input
+        <DateField
           label={t("ground.otherDate")}
-          type="date"
           min={today}
           max={lastDay}
           value={date}
-          onChange={(e) => e.target.value && onSelect({ date: e.target.value, slot: "" })}
+          onChange={(v) => v && onSelect({ date: v, slot: "" })}
           className="mt-2"
         />
       </div>

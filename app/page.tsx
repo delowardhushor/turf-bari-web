@@ -9,7 +9,9 @@ import TurfCard, { TurfCardSkeleton } from "@/components/turf/TurfCard";
 import { HOUR_OPTIONS } from "@/constants/time";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useActiveGrounds, useSportLabel, useSports } from "@/hooks/useSports";
-import { iconText } from "@/components/ui/SportIcon";
+import { SportIcon } from "@/components/ui/SportIcon";
+import Dropdown from "@/components/ui/Dropdown";
+import DatePicker from "@/components/ui/DatePicker";
 import { formatTime, todayStr } from "@/utils/format";
 
 const containerVariants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } };
@@ -25,6 +27,19 @@ export default function Home() {
   const [date, setDate] = useState("");
   const [from, setFrom] = useState("");
 
+  const sportOptions = [
+    { value: "", label: t("search.anySport") },
+    ...sports.map((s) => ({
+      value: s.key,
+      label: sportLabel(s.key),
+      icon: <SportIcon icon={s.icon} className="text-base" />,
+    })),
+  ];
+  const timeOptions = [
+    { value: "", label: t("search.anyTime") },
+    ...HOUR_OPTIONS.map((h) => ({ value: h, label: formatTime(h) })),
+  ];
+
   // Hand the choices to the search screen, which defaults the date to today
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -39,7 +54,7 @@ export default function Home() {
     <div className="w-full bg-white dark:bg-zinc-950">
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-20 lg:py-32">
+      <section className="relative overflow-x-clip py-20 lg:py-32">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.emerald.50),white)] dark:bg-[radial-gradient(45rem_50rem_at_top,theme(colors.zinc.900),theme(colors.zinc.950))] opacity-70" />
         <div className="absolute top-1/4 left-1/2 -z-10 h-72 w-72 -translate-x-1/2 rounded-full bg-emerald-400/20 blur-3xl" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -64,29 +79,19 @@ export default function Home() {
             </motion.p>
 
             <motion.div initial={{ opacity: 0, y: 25 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-10 w-full max-w-3xl rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl shadow-zinc-200/50 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
-              <form onSubmit={onSearch} className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-2 items-center">
-                <div className="flex flex-col px-2 py-1">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{t("hero.sport")}</span>
-                  <select value={sport} onChange={(e) => setSport(e.target.value)} className="mt-1 bg-transparent text-sm font-semibold text-zinc-800 focus:outline-none dark:bg-zinc-900 dark:text-zinc-100">
-                    <option value="">{t("search.anySport")}</option>
-                    {sports.map((s) => (
-                      <option key={s.key} value={s.key}>{[iconText(s.icon), sportLabel(s.key)].filter(Boolean).join(" ")}</option>
-                    ))}
-                  </select>
+              className="relative z-20 mt-10 w-full max-w-3xl rounded-2xl border border-zinc-200/80 bg-white p-4 shadow-xl shadow-zinc-200/50 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-none">
+              <form onSubmit={onSearch} className="grid grid-cols-1 gap-4 md:grid-cols-4 md:gap-1 items-center text-left">
+                <div className="flex flex-col rounded-xl px-3 py-2 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                  <span className="mb-1 text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{t("hero.sport")}</span>
+                  <Dropdown variant="bare" aria-label={t("hero.sport")} value={sport} onChange={setSport} options={sportOptions} />
                 </div>
-                <div className="flex flex-col px-2 py-1 md:border-l md:border-zinc-200 dark:md:border-zinc-800">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{t("hero.date")}</span>
-                  <input type="date" min={todayStr()} value={date} onChange={(e) => setDate(e.target.value)} className="mt-1 bg-transparent text-sm font-semibold text-zinc-800 focus:outline-none dark:text-zinc-100" />
+                <div className="flex flex-col rounded-xl px-3 py-2 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                  <span className="mb-1 text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{t("hero.date")}</span>
+                  <DatePicker variant="bare" aria-label={t("hero.date")} min={todayStr()} value={date} onChange={setDate} placeholder={t("search.today")} />
                 </div>
-                <div className="flex flex-col px-2 py-1 md:border-l md:border-zinc-200 dark:md:border-zinc-800">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{t("hero.time")}</span>
-                  <select value={from} onChange={(e) => setFrom(e.target.value)} className="mt-1 bg-transparent text-sm font-semibold text-zinc-800 focus:outline-none dark:bg-zinc-900 dark:text-zinc-100">
-                    <option value="">{t("search.anyTime")}</option>
-                    {HOUR_OPTIONS.map((h) => (
-                      <option key={h} value={h}>{formatTime(h)}</option>
-                    ))}
-                  </select>
+                <div className="flex flex-col rounded-xl px-3 py-2 transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/50">
+                  <span className="mb-1 text-xs font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">{t("hero.time")}</span>
+                  <Dropdown variant="bare" aria-label={t("hero.time")} value={from} onChange={setFrom} options={timeOptions} />
                 </div>
                 <button type="submit" className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 font-semibold text-white shadow-md hover:bg-emerald-600 transition-all active:scale-[0.98]">
                   <Search className="h-4 w-4 shrink-0" />

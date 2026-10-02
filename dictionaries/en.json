@@ -10,7 +10,10 @@
     "showPassword": "Show password",
     "hidePassword": "Hide password",
     "minutes": "{count} min",
-    "errorGeneric": "Something went wrong. Please try again."
+    "errorGeneric": "Something went wrong. Please try again.",
+    "selectDate": "Select a date",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month"
   },
   "nav": {
     "home": "Home",
