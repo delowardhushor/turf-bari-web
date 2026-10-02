@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import type { ReactNode } from "react";
 
 /**
@@ -16,7 +17,9 @@ export default function Providers({ children }: { children: ReactNode }) {
       enableSystem
       disableTransitionOnChange={false}
     >
-      <LanguageProvider>{children}</LanguageProvider>
+      <LanguageProvider>
+        <AuthProvider>{children}</AuthProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

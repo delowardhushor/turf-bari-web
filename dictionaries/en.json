@@ -1,11 +1,44 @@
 {
+  "common": {
+    "email": "Email",
+    "phone": "Phone number",
+    "password": "Password",
+    "name": "Full name",
+    "save": "Save changes",
+    "saving": "Saving…",
+    "retry": "Try again",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "minutes": "{count} min",
+    "errorGeneric": "Something went wrong. Please try again."
+  },
   "nav": {
     "home": "Home",
     "findTurfs": "Find Turfs",
     "myBookings": "My Bookings",
     "contactUs": "Contact Us",
     "signIn": "Sign In",
-    "bookNow": "Book Now"
+    "bookNow": "Book Now",
+    "account": "My account",
+    "signOut": "Sign out"
+  },
+  "sports": {
+    "football": "Football",
+    "cricket": "Cricket",
+    "futsal": "Futsal",
+    "volleyball": "Volleyball",
+    "basketball": "Basketball",
+    "badminton": "Badminton",
+    "tennis": "Tennis"
+  },
+  "days": {
+    "sun": "Sun",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat"
   },
   "hero": {
     "badge": "Easy Turf Booking in Bangladesh",
@@ -13,12 +46,9 @@
     "heading2": "Seconds",
     "subheading": "Discover high-quality football fields and cricket pitches near you. Choose your slot, book online, and get ready to play.",
     "sport": "Sport",
-    "location": "Location",
     "date": "Date",
-    "search": "Search",
-    "football": "Football",
-    "cricket": "Cricket",
-    "futsal": "Futsal"
+    "time": "From time",
+    "search": "Search"
   },
   "features": {
     "heading": "Why Book Through TurfBari?",
@@ -42,12 +72,221 @@
   },
   "turfs": {
     "heading": "Featured Venues",
-    "subheading": "Top-rated arenas with active bookings right now.",
-    "viewAll": "View All",
-    "reviews": "reviews",
-    "priceLabel": "Price Starts At",
-    "perHour": "/ Hour",
-    "bookSlot": "Book Slot"
+    "subheading": "Turfs you can book right now.",
+    "viewAll": "View All"
+  },
+  "search": {
+    "title": "Find a turf",
+    "subtitle": "Pick a date, sport and time to see the turfs that still have a free slot.",
+    "filters": "Search filters",
+    "date": "Date",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "sport": "Sport",
+    "anySport": "Any sport",
+    "from": "From",
+    "to": "Until",
+    "anyTime": "Any time",
+    "invalidRange": "The end time must be later than the start time.",
+    "resultsOne": "1 turf available",
+    "resultsMany": "{count} turfs available",
+    "noResultsTitle": "No turfs available",
+    "noResultsDesc": "Nothing is free for that date and time. Try another day, a wider time window, or a different sport.",
+    "clearFilters": "Clear sport and time",
+    "slotOpenOne": "1 slot open",
+    "slotsOpen": "{count} slots open",
+    "moreSlots": "+{count} more",
+    "perSlot": "/ {minutes} min slot",
+    "viewBook": "View & book"
+  },
+  "ground": {
+    "backToSearch": "Back to search",
+    "notFound": "Turf not found",
+    "notFoundDesc": "This turf doesn't exist or is no longer listed.",
+    "hours": "Opening hours",
+    "slotLength": "Slot length",
+    "payment": "Payment",
+    "advanceRequired": "Advance required",
+    "noAdvance": "No advance needed",
+    "about": "About this turf",
+    "pricing": "Pricing",
+    "pricingNote": "Price per slot, by time of day and weekday. Offers are applied on top.",
+    "timeBand": "Time",
+    "flatRate": "{price} per {minutes}-minute slot, every day.",
+    "offers": "Offers",
+    "percentOff": "{percent}% off",
+    "inactive": "This turf isn't taking bookings right now.",
+    "bookTitle": "Book a slot",
+    "chooseDate": "Choose a date",
+    "otherDate": "Or pick another date",
+    "chooseSport": "Choose a sport",
+    "chooseSlot": "Choose a slot",
+    "morning": "Morning",
+    "afternoon": "Afternoon",
+    "evening": "Evening",
+    "noSlots": "No slots on this date.",
+    "booked": "Booked",
+    "unavailable": "Unavailable",
+    "pickSlot": "Select a slot to see your booking summary.",
+    "pickSport": "Choose a sport to continue.",
+    "slotGone": "The slot you chose is no longer available. Please pick another.",
+    "slotTaken": "Someone just booked that slot. Please choose another one.",
+    "advanceNote": "This turf asks for an advance of {amount} (50%). Pay it to the turf to get your booking confirmed.",
+    "confirm": "Confirm booking",
+    "booking": "Booking…",
+    "signInToBook": "Sign in to book",
+    "needAccount": "No account yet?"
+  },
+  "booking": {
+    "myTitle": "My bookings",
+    "mySubtitle": "Your upcoming and past games in one place.",
+    "tab": {
+      "upcoming": "Upcoming",
+      "past": "Past",
+      "cancelled": "Cancelled"
+    },
+    "empty": {
+      "upcoming": "No upcoming bookings",
+      "past": "No past bookings",
+      "cancelled": "No cancelled bookings"
+    },
+    "emptyUpcomingDesc": "Find a turf and book your next game.",
+    "status": {
+      "pending": "Awaiting confirmation",
+      "confirmed": "Confirmed",
+      "cancelled": "Cancelled"
+    },
+    "payment": {
+      "pending": "Payment pending",
+      "paid": "Paid"
+    },
+    "groundRemoved": "Turf no longer available",
+    "viewAll": "All bookings",
+    "notFound": "Booking not found",
+    "notFoundDesc": "We couldn't find that booking on your account.",
+    "successTitle": "Booking received!",
+    "successDesc": "Your slot is reserved. The turf will confirm your booking shortly.",
+    "cancelledNote": "This booking was cancelled.",
+    "date": "Date",
+    "time": "Time",
+    "sport": "Sport",
+    "total": "Total",
+    "advance": "Advance amount",
+    "paymentStatus": "Payment",
+    "bookedOn": "Booked on",
+    "reference": "Reference",
+    "advanceInfo": "This turf requires an advance of {amount}. Pay it to the turf so your booking can be confirmed.",
+    "changeInfo": "Need to change or cancel this booking?",
+    "bookAgain": "Book again"
+  },
+  "auth": {
+    "signInWith": "Sign in with",
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to book turfs and manage your bookings.",
+    "signupTitle": "Create your account",
+    "signupSubtitle": "Book your next game in a few taps.",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "createAccount": "Create account",
+    "creating": "Creating account…",
+    "noAccount": "New to TurfBari?",
+    "haveAccount": "Already have an account?",
+    "forgotPassword": "Forgot password?",
+    "confirmPassword": "Confirm password",
+    "passwordHint": "At least 6 characters.",
+    "invalidEmail": "Enter a valid email address.",
+    "invalidPhone": "Enter a valid phone number, e.g. 01712345678.",
+    "nameRequired": "Please enter your name.",
+    "passwordRequired": "Please enter your password.",
+    "passwordMin": "Password must be at least 6 characters.",
+    "passwordMismatch": "Passwords don't match.",
+    "staffAccount": "This is a turf owner or staff account. Please sign in through the owner console instead.",
+    "openConsole": "Open owner console",
+    "forgotTitle": "Reset your password",
+    "forgotSubtitle": "Enter your email or phone number and we'll send you a 6-digit code.",
+    "sendCode": "Send code",
+    "sending": "Sending…",
+    "codeSentTitle": "Enter your code",
+    "codeSentDesc": "If an account exists for {identifier}, a 6-digit code is on its way.",
+    "otpLabel": "6-digit code",
+    "otpInvalid": "Enter the 6-digit code.",
+    "newPassword": "New password",
+    "resetPassword": "Reset password",
+    "resetting": "Updating…",
+    "resendCode": "Resend code",
+    "codeResent": "We've sent a new code.",
+    "changeIdentifier": "Use a different email or phone",
+    "backToLogin": "Back to sign in",
+    "resetDoneTitle": "Password updated",
+    "resetDoneDesc": "You can now sign in with your new password."
+  },
+  "account": {
+    "title": "My account",
+    "subtitle": "Manage your profile and password.",
+    "notSet": "Not set",
+    "profileSaved": "Your profile has been updated.",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "updatePassword": "Update password",
+    "passwordChanged": "Your password has been changed."
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "Questions about a booking or a turf? We're happy to help.",
+    "address": "Address",
+    "ownersTitle": "Own a turf?",
+    "ownersDesc": "Turf owners list their grounds, set slot prices and manage bookings from the TurfBari owner console. Get in touch and we'll help you get started."
+  },
+  "about": {
+    "title": "About TurfBari",
+    "subtitle": "Book a turf the way it should be: simple and quick.",
+    "body": "TurfBari connects players with turfs across Bangladesh. Instead of calling around to find a free ground, you search by date, sport and time, see only the turfs that are actually available, and book the slot online. Turf owners manage their grounds, prices and bookings in one place, so what you see is what's really open.",
+    "howTitle": "How it works",
+    "steps": {
+      "search": {
+        "title": "Search",
+        "desc": "Choose a date, a sport and the time you want to play."
+      },
+      "pick": {
+        "title": "Pick a slot",
+        "desc": "Compare turfs with open slots and prices, then choose the one you like."
+      },
+      "book": {
+        "title": "Book",
+        "desc": "Confirm in a few taps and track your booking from your account."
+      }
+    }
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "subtitle": "Quick answers about booking on TurfBari.",
+    "stillStuck": "Can't find your answer?",
+    "items": {
+      "q1": {
+        "q": "How do I book a turf?",
+        "a": "Open Find Turfs, choose a date, sport and time, and pick a turf with an open slot. Select the slot you want and confirm. You'll need to be signed in to complete the booking."
+      },
+      "q2": {
+        "q": "Do I need an account?",
+        "a": "You can browse turfs and see open slots without one. To book and to see your bookings you need a free account, which you can create with your phone number or email."
+      },
+      "q3": {
+        "q": "What does \"Awaiting confirmation\" mean?",
+        "a": "Your slot is reserved for you and no one else can book it. The turf then confirms the booking, and the status changes to Confirmed."
+      },
+      "q4": {
+        "q": "How do I pay?",
+        "a": "Payment is arranged with the turf. If a turf asks for an advance, the amount is shown before you confirm, and on your booking page afterwards."
+      },
+      "q5": {
+        "q": "Can I cancel or change a booking?",
+        "a": "Please contact the turf or our support team and they will help you. Cancelled slots are released so others can book them."
+      },
+      "q6": {
+        "q": "Some turfs offer more than one sport. How does that work?",
+        "a": "A single ground can host several sports, for example cricket and football. When you book one of these turfs you choose which sport you are playing."
+      }
+    }
   },
   "cta": {
     "heading": "Ready to dominate the pitch?",

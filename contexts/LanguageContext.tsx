@@ -8,6 +8,7 @@ import {
   useCallback,
   type ReactNode,
 } from "react";
+import enDictionary from "../dictionaries/en.json";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -18,7 +19,8 @@ type Dictionary = typeof import("../dictionaries/en.json");
 interface LanguageContextValue {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: (key: string) => string;
+  /** Look up a key; `{name}` placeholders in the text are filled from `vars`. */
+  t: (key: string, vars?: Record<string, string | number>) => string;
   dict: Dictionary | null;
 }
 
@@ -56,11 +58,18 @@ function resolve(obj: Record<string, unknown>, key: string): string {
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>("en");
-  const [dict, setDict] = useState<Dictionary | null>(null);
+  // English is bundled so the first paint shows real text instead of raw keys
+  const [dict, setDict] = useState<Dictionary | null>(enDictionary as Dictionary);
 
   // Load dictionary whenever locale changes
   useEffect(() => {
     DICTIONARIES[locale]().then(setDict);
+  }, [locale]);
+
+  // Keep <html lang> in sync, including after the saved locale is restored,
+  // so the Bangla font rule in globals.css applies
+  useEffect(() => {
+    document.documentElement.lang = locale;
   }, [locale]);
 
   // Restore from localStorage on mount
@@ -74,14 +83,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLocale = useCallback((next: Locale) => {
     setLocaleState(next);
     localStorage.setItem(STORAGE_KEY, next);
-    // Update the <html lang="..."> attribute for accessibility + Bangla font
-    document.documentElement.lang = next;
   }, []);
 
   const t = useCallback(
-    (key: string): string => {
+    (key: string, vars?: Record<string, string | number>): string => {
       if (!dict) return key;
-      return resolve(dict as unknown as Record<string, unknown>, key) ?? key;
+      const text = resolve(dict as unknown as Record<string, unknown>, key) ?? key;
+      if (!vars || typeof text !== "string") return text;
+      return text.replace(/\{(\w+)\}/g, (match, name) =>
+        name in vars ? String(vars[name]) : match
+      );
     },
     [dict]
   );

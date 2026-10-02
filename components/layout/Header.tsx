@@ -8,6 +8,8 @@ import { Menu, X, Calendar, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
+import UserMenu from "@/components/layout/UserMenu";
+import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Header() {
@@ -15,6 +17,7 @@ export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const { t } = useLanguage();
+  const { user, ready, signOut } = useAuth();
 
   const NAV_ITEMS = [
     { label: t("nav.home"), href: "/" },
@@ -57,7 +60,7 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
           {NAV_ITEMS.map((item) => {
-            const isActive = pathname === item.href;
+            const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
@@ -82,12 +85,18 @@ export default function Header() {
           <LanguageSwitcher />
           <ThemeToggle />
           <div className="ml-2 h-5 w-px bg-zinc-200 dark:bg-zinc-700" />
-          <Link
-            href="/login"
-            className="px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
-          >
-            {t("nav.signIn")}
-          </Link>
+          {/* Nothing until the saved session has been read, so a signed-in user never sees "Sign in" flash */}
+          {ready &&
+            (user ? (
+              <UserMenu />
+            ) : (
+              <Link
+                href="/login"
+                className="px-3 py-2 text-sm font-medium text-zinc-700 transition-colors hover:text-zinc-900 dark:text-zinc-300 dark:hover:text-zinc-50"
+              >
+                {t("nav.signIn")}
+              </Link>
+            ))}
           <Link
             href="/turfs"
             className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-emerald-500/25 transition-all duration-200 hover:bg-emerald-600 hover:scale-[1.02] active:scale-[0.98]"
@@ -127,7 +136,7 @@ export default function Header() {
           >
             <div className="space-y-1 px-4 pb-6 pt-3">
               {NAV_ITEMS.map((item) => {
-                const isActive = pathname === item.href;
+                const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
                 return (
                   <Link
                     key={item.href}
@@ -144,12 +153,30 @@ export default function Header() {
                 );
               })}
               <div className="border-t border-zinc-100 pt-4 dark:border-zinc-900 space-y-3 px-4">
-                <Link
-                  href="/login"
-                  className="block text-center rounded-xl py-3 text-base font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900/50"
-                >
-                  {t("nav.signIn")}
-                </Link>
+                {user ? (
+                  <>
+                    <Link
+                      href="/account"
+                      className="block text-center rounded-xl py-3 text-base font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900/50"
+                    >
+                      {user.name}
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => signOut({ redirect: true })}
+                      className="block w-full text-center rounded-xl py-3 text-base font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900/50"
+                    >
+                      {t("nav.signOut")}
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="block text-center rounded-xl py-3 text-base font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:text-zinc-300 dark:hover:bg-zinc-900/50"
+                  >
+                    {t("nav.signIn")}
+                  </Link>
+                )}
                 <Link
                   href="/turfs"
                   className="flex items-center justify-center gap-2 rounded-xl bg-emerald-500 py-3 text-base font-semibold text-white shadow-md shadow-emerald-500/20 transition-all hover:bg-emerald-600"

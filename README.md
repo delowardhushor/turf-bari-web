@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TurfBari web
 
-## Getting Started
+Customer site for TurfBari. Next.js 16 (App Router), Tailwind v4, English and Bangla.
 
-First, run the development server:
+## Run
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local   # NEXT_PUBLIC_API_URL -> backend, e.g. http://localhost:5002/api/v1
+npm install
+npm run dev                  # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The backend must run against a MongoDB **replica set** (bookings use transactions).
+Turf owners and staff use the separate `console/` app; they are pointed there if they sign in here.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Screens
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Route | What it does | Backend |
+| --- | --- | --- |
+| `/` | Landing page, quick search, featured turfs | `GET /grounds` |
+| `/turfs` | Search by date, sport and time window (filters live in the URL) | `GET /grounds/search` |
+| `/turfs/[id]` | Turf details, price table, offers, pick a slot and book | `GET /grounds/:id`, `GET /slots`, `POST /bookings` |
+| `/bookings` | My bookings: upcoming / past / cancelled | `GET /bookings` |
+| `/bookings/[id]` | Booking details | `GET /bookings/:id` |
+| `/login`, `/signup` | Email or phone; returns to `?next=` | `/auth/login/*`, `/auth/signup/*` |
+| `/forgot-password` | Request a code, then set a new password | `/auth/forgot-password`, `/auth/reset-password` |
+| `/account` | Edit name, change password, sign out | `/users/:id`, `/auth/change-password` |
+| `/contact`, `/about`, `/faq` | Static info | none |
 
-## Learn More
+## Layout
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/          routes (server wrappers that set metadata, rendering client views)
+components/   ui/ primitives, layout/, auth/, turf/, bookings/, account/, pages/
+contexts/     Auth (session in localStorage), Language (en/bn)
+hooks/        useAsync, useNow, useSports
+services/     api client + auth / grounds / bookings calls
+utils/        formatting, dates, redirects
+dictionaries/ en.json, bn.json (keep keys identical)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Notes: dates and times are plain local strings (never UTC); the API doesn't hide slots that already
+started, so the UI does. Customers cannot cancel yet (no customer cancel endpoint).
