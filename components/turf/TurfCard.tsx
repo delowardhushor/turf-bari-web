@@ -6,6 +6,7 @@ import { buttonStyles } from "@/components/ui/Button";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useSportIcon, useSportLabel } from "@/hooks/useSports";
 import { SportIcon } from "@/components/ui/SportIcon";
+import { assetUrl } from "@/utils/assets";
 import { companyOf, formatMoney, formatTime, startingPrice } from "@/utils/format";
 import type { Ground, Slot } from "@/types";
 
@@ -34,6 +35,7 @@ export default function TurfCard({ ground, slots, date, sport }: Props) {
   const sportLabel = useSportLabel();
   const sportIcon = useSportIcon();
   const company = companyOf(ground);
+  const cover = ground.images?.[0];
   const sorted = slots ? [...slots].sort((a, b) => a.startTime.localeCompare(b.startTime)) : [];
   const price = slots ? Math.min(...slots.map((s) => s.price)) : startingPrice(ground);
   // A ground with one sport needs no sport in the link; the booking page picks it
@@ -41,9 +43,18 @@ export default function TurfCard({ ground, slots, date, sport }: Props) {
 
   return (
     <article className="flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm transition-all hover:shadow-lg dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="relative flex h-32 items-end bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-4">
-        <Trophy className="absolute right-4 top-4 h-10 w-10 text-white/20" aria-hidden />
-        <div className="flex flex-wrap gap-1.5">
+      <div className="relative flex h-40 items-end bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700 p-4">
+        {cover ? (
+          <>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={assetUrl(cover)} alt={ground.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+            {/* keeps the sport chips readable on bright photos */}
+            <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+          </>
+        ) : (
+          <Trophy className="absolute right-4 top-4 h-10 w-10 text-white/20" aria-hidden />
+        )}
+        <div className="relative flex flex-wrap gap-1.5">
           {ground.sports.map((s) => (
             <span key={s} className="inline-flex items-center gap-1.5 rounded-lg bg-white/95 px-2.5 py-1 text-xs font-bold text-zinc-900 shadow-sm">
               <SportIcon icon={sportIcon(s)} className="text-sm" />
@@ -115,7 +126,7 @@ export default function TurfCard({ ground, slots, date, sport }: Props) {
 export function TurfCardSkeleton() {
   return (
     <div aria-hidden className="overflow-hidden rounded-2xl border border-zinc-200 dark:border-zinc-800">
-      <div className="h-32 animate-pulse bg-zinc-200 dark:bg-zinc-800" />
+      <div className="h-40 animate-pulse bg-zinc-200 dark:bg-zinc-800" />
       <div className="space-y-3 p-5">
         <div className="h-5 w-2/3 animate-pulse rounded bg-zinc-200 dark:bg-zinc-800" />
         <div className="h-3 w-full animate-pulse rounded bg-zinc-200 dark:bg-zinc-800" />

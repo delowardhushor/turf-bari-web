@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, Banknote, Clock, MapPin, Percent, Timer, Trophy } from "lucide-react";
 import BookingPanel from "./BookingPanel";
+import PhotoGallery from "./PhotoGallery";
 import PricingTable from "./PricingTable";
 import Container from "@/components/ui/Container";
 import Button, { buttonStyles } from "@/components/ui/Button";
@@ -159,6 +160,8 @@ function GroundContent({
 
       <div className="mt-8 grid gap-8 lg:grid-cols-3">
         <div className="min-w-0 space-y-8 lg:col-span-2">
+          <PhotoGallery images={ground.images ?? []} name={ground.name} />
+
           <div className="grid gap-3 sm:grid-cols-3">
             <Fact
               icon={Clock}

@@ -48,6 +48,8 @@ export type Ground = {
   _id: string;
   name: string;
   description?: string;
+  /** Public paths of the gallery photos; the first one is the cover. */
+  images?: string[];
   companyId: Ref<Company>;
   sports: string[];
   slotDuration: number;
