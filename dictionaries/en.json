@@ -213,6 +213,7 @@
     "resetPassword": "Reset password",
     "resetting": "Updating…",
     "resendCode": "Resend code",
+    "resendIn": "Resend code in {seconds}s",
     "codeResent": "We've sent a new code.",
     "changeIdentifier": "Use a different email or phone",
     "backToLogin": "Back to sign in",

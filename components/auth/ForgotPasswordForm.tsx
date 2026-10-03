@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import AuthCard from "./AuthCard";
@@ -15,6 +15,9 @@ import type { Identifier } from "@/types";
 
 type Step = "request" | "reset" | "done";
 
+/** Mirrors the API's wait between OTPs to the same number (OTP_COOLDOWN_SECONDS). */
+const RESEND_COOLDOWN_S = 60;
+
 /** Two steps: ask for a code, then set a new password with it. */
 export default function ForgotPasswordForm() {
   const { t } = useLanguage();
@@ -28,6 +31,13 @@ export default function ForgotPasswordForm() {
   const [formError, setFormError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const id = setTimeout(() => setCooldown((c) => c - 1), 1000);
+    return () => clearTimeout(id);
+  }, [cooldown]);
 
   const requestCode = async (target: Identifier) => {
     setBusy(true);
@@ -36,6 +46,7 @@ export default function ForgotPasswordForm() {
       await authService.forgotPassword(target);
       setWho(target);
       setStep("reset");
+      setCooldown(RESEND_COOLDOWN_S);
       return true;
     } catch (err) {
       setFormError(err instanceof ApiError ? err.message : t("common.errorGeneric"));
@@ -146,10 +157,10 @@ export default function ForgotPasswordForm() {
             <button
               type="button"
               onClick={onResend}
-              disabled={busy}
+              disabled={busy || cooldown > 0}
               className="font-semibold text-emerald-600 hover:text-emerald-700 disabled:opacity-50 dark:text-emerald-400"
             >
-              {t("auth.resendCode")}
+              {cooldown > 0 ? t("auth.resendIn", { seconds: cooldown }) : t("auth.resendCode")}
             </button>
             <button
               type="button"

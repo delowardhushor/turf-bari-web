@@ -213,6 +213,7 @@
     "resetPassword": "পাসওয়ার্ড রিসেট করুন",
     "resetting": "আপডেট হচ্ছে…",
     "resendCode": "আবার কোড পাঠান",
+    "resendIn": "{seconds} সেকেন্ড পরে আবার কোড পাঠান",
     "codeResent": "আমরা একটি নতুন কোড পাঠিয়েছি।",
     "changeIdentifier": "অন্য ইমেইল বা ফোন ব্যবহার করুন",
     "backToLogin": "সাইন ইনে ফিরে যান",
